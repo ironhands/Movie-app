@@ -1,66 +1,64 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+Tech Test 
+==========
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Plan
+----
 
-## About Laravel
+Movie look up site.
+Form for name/year
+Check db
+If in db return data
+Else ping open movie api
+And save data in db for future calls, before returning data
+For fun add a button for 'I'm feeling lucky?' 
+Get a random result from the db. 
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Edge cases
+----------
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+No move in the api? - covered error path take user back search page with no error msgs 
+2 movies in the api ? -  covered returns only one result
+Missing fields in the api ?  - covered with validation 
+Look up title in db not exact match - covered with looser search query for titles.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Improvements? 
+--------------
 
-## Learning Laravel
+Error logging, to track if/how api calls fail. 
+Use data seeders to prefill some movies in the db, so there's always data at hand. 
+Run tests with coverage, aim for close to 100% as possible. 
+Started using tailwindcss as its new, would go further with it nextime
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Progress
+--------
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+-   Step one is to get a clean local install of laravel, done using laravel sail, to get a docker container spun up. 
+-   Configure basics, scraping some extra stuff not needed etc 
+-   Misc project specific local setup 
+-   Add new phpunit config and directories to phpstorm, and make sure the tests run clean.
+-   Setup xdebug in phpstorm so data/variables can be inspected mid execution.
+-   Made 'Movie' eloquent model, and matching migration.
+-   Running migration on command line made new table
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+-   Setup call basic call to the movie api. Call uses config to extract the api keys, and has a title search field passed in
+-   Before the api is called, the movie title from the search form is checked against the db. If theres a match we skip the api. 
+-   Else the api is called and data is received.
 
-## Laravel Sponsors
+-   Map data that we will be expecting from the api  
+-   Data to include : movie title, year, synopsis, poster, age rating, and metacritic
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+-   Api data is checked, for status, and basic data validity. 
+    If either fail we dont try to add to the db, and the user is taken back to the form without loading anything.
+-   If data is good it is mapped out and saved as a new entry in the movies table. 
+-   Before returning the page with the data from the db, ready to render.
+-   Unit tests:  adding more useful test coverage, using to change code to catch edge cases, and general tidyup safely.
 
-### Premium Partners
+-   Alternate path is i'm feeling lucky, this pings the db, looking for a single row at random, and renders the page with its result accordingly.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+Frontend : 
+-   Started to break things into blade components/layouts
+-   Quick tidy of the view, using existing style options to save time as much as possible.
 
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Screenshots
+--------------
+A bunch of screenshots from dev, can be found in the screenshots directory. 
